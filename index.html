@@ -64,8 +64,11 @@
       <!-- VIDEO PLACEHOLDER: replace this figure with a <video> element + poster once the final asset is delivered. No autoplay with sound. Keep the 16:9 wrapper and gold-glow frame. -->
       <figure style="margin:0; position:relative; border-radius:16px; padding:6px; background:linear-gradient(140deg, rgba(201,162,75,0.55), rgba(201,162,75,0.12) 45%, rgba(201,162,75,0.4)); box-shadow:0 30px 80px rgba(0,0,0,0.55), 0 0 60px rgba(201,162,75,0.14);">
         <div style="position:relative; width:100%; aspect-ratio:16/9; border-radius:12px; overflow:hidden; background:radial-gradient(120% 120% at 50% 30%, #1a1a1d 0%, #0d0d0f 70%);">
-          <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px;">
-            <button class="rg-play" aria-label="Play the Restore Your Glow video" style="width:clamp(64px,9vw,88px); height:clamp(64px,9vw,88px); border-radius:50%; border:1px solid rgba(201,162,75,0.6); background:rgba(201,162,75,0.14); backdrop-filter:blur(2px); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 0 40px rgba(201,162,75,0.22); transition:background .25s ease,transform .2s ease;">
+          <video id="rgVideo" playsinline preload="none" style="width:100%; height:100%; object-fit:cover; display:block;">
+            <source src="https://assets.cdn.filesafe.space/x8a4MjwLyYluFTb3971o/media/6a67d48c69870c3f0dabd300.mp4" type="video/mp4">
+          </video>
+          <div id="rgPlayOverlay" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px;">
+            <button class="rg-play" aria-label="Play the Restore Your Glow video" onclick="rgPlayVideo()" style="width:clamp(64px,9vw,88px); height:clamp(64px,9vw,88px); border-radius:50%; border:1px solid rgba(201,162,75,0.6); background:rgba(201,162,75,0.14); backdrop-filter:blur(2px); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 0 40px rgba(201,162,75,0.22); transition:background .25s ease,transform .2s ease;">
               <svg width="26" height="30" viewBox="0 0 26 30" fill="none" aria-hidden="true"><path d="M25 13.27a2 2 0 0 1 0 3.46L3 29.46A2 2 0 0 1 0 27.73V2.27A2 2 0 0 1 3 .54l22 12.73Z" fill="#e6cd93"/></svg>
             </button>
             <p style="margin:0; font-family:'Jost',sans-serif; font-weight:400; text-transform:uppercase; letter-spacing:0.34em; font-size:11.5px; color:rgba(230,205,147,0.72);">Restore Your Glow &nbsp;&middot;&nbsp; Watch the Film</p>
@@ -465,6 +468,15 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && state.open) window.rgCloseFlow();
   });
+
+  window.rgPlayVideo = function () {
+    var v = document.getElementById('rgVideo');
+    var overlay = document.getElementById('rgPlayOverlay');
+    if (!v) return;
+    v.controls = true;
+    v.play();
+    if (overlay) overlay.style.display = 'none';
+  };
 
   render();
 })();
